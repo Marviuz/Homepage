@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My Homepage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Go-home.svg/2000px-Go-home.svg.png">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark fixed-top" id="nav">
+        <a href="." class="navbar-brand"><i class="fas fa-home"></i></a>
+        <input type="text" class="ml-auto" placeholder="Search..." id="search" autocomplete="off">
+    </nav>
+
+    <script>
+        $(function() {
+            $('#search').focus();
+            $('#search').on('keyup', function() {
+                var kbd = $(this).val().toLowerCase();
+                $('.element-img').each(function() {
+                    var elmt = $(this).attr('alt').toLowerCase()
+                    if (elmt.indexOf(kbd) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <div class="container-fluid p-5">
+        <ul class="elements">
+            <li class="element">
+                <a href="http://kissanime.ru/" target="_blank">
+               <img src="http://kissanime.ru/Content/images/logo.png" alt="KissAnime" class="element-img">
+               </a>
+            </li>
+            <li class="element">
+                <a href="https://www.google.com" target="_blank">
+               <img src="https://www.google.com.ph/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" class="element-img">
+               </a>
+            </li>
+            <li class="element">
+                <a href="https://github.com/" target="_blank">
+               <img src="https://image.flaticon.com/icons/svg/25/25231.svg" alt="GitHub" class="element-img">
+               </a>
+            </li>
+            <li class="element">
+                <a href="https://www.youtube.com/" target="_blank">
+                   <img src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c545.png" alt="Youtube" class="element-img">
+               </a>
+            </li>
+            <li class="element">
+                <a href="https://www.facebook.com/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/2000px-F_icon.svg.png" alt="FaceBook" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="https://www.messenger.com/" target="_blank">
+                    <img src="http://www.freeiconspng.com/uploads/facebook-chat-logo-png-19.png" alt="Facebook Messenger" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="https://i.slu.edu.ph/lib/images/Logo.png" target="_blank">
+                    <img src="https://i.slu.edu.ph/lib/images/Logo.png" alt="SLU portal" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="http://hikarinoakariost.info/" target="_blank">
+                    <img src="http://hikarinoakariost.info/wp-content/uploads/nuevo/2018/01/Banner2017A-1.jpg" alt="Hikari no Akari OST" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="https://nicoblog.org/" target="_blank">
+                    <img src="https://nicoblog.org/wp-content/uploads/2016/10/logo_bullets_300.png" alt="Nicoblog" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="http://anichart.net/images/logo.png">
+                    <img src="http://anichart.net/images/logo.png" alt="AniChart" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="https://classroom.google.com/u/1/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Google_Classroom_Logo.png" alt="Google Classroom" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="https://stackoverflow.com/" target="_blank">
+                    <img src="https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.png" alt="StackOverflow" class="element-img">
+                </a>
+            </li>
+            <li class="element">
+                <a href="http://na.op.gg/champion/statistics" target="_blank">
+                    <img src="https://img7.androidappsapk.co/300/9/c/5/gg.op.lol.android.png" alt="OP.GG" class="element-img">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+body {
+    overflow-x: hidden;
+    animation: bgColor 10s infinite;
+}
+
+body::before {
+    width: 100%;
+    text-align: center;
+    color: white;
+    position: fixed;
+    content: "Welcome!";
+    font-size: 100px;
+    animation: bgAnimate 10s infinite;
+    top: 40%;
+    z-index: -1;
+}
+
+.elements {
+    list-style-type: none;
+}
+
+.element {
+    float: left;
+    margin: 100px 50px 50px;
+}
+
+.element-img {
+    height: 100px;
+    width: auto;
+    transition: .3s ease-in-out;
+    opacity: 0.3;
+}
+
+.element-img:hover {
+    transform: scale(1.5, 1.5);
+    filter: drop-shadow(#222 0 0 10px);
+    opacity: 1;
+}
+
+#nav {
+    box-shadow: #545454 0 0 10px 5px;
+}
+
+a,
+a:hover {
+    color: #fff;
+}
+
+.navbar-brand {
+    font-size: 30px;
+    transition: .3s ease-in-out;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.7, 1.7);
+}
+
+#search {
+    transition: .3s ease-in-out;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    width: 300px;
+}
+
+#search:focus {
+    transform: scale(1.5, 1.5) translate(-50px, 0);
+}
+
+@keyframes bgAnimate {
+    0% {transform: rotate(0deg);}
+    25% {transform: rotate(3deg);}
+    50% {transform: rotate(-5deg); content: "Pick Your Website!";}
+    75% {transform: rotate(5deg);}
+    100% {transform: rotate(0deg);}
+}
+
+@keyframes bgColor {
+    0% {background-color: darkblue;}
+    25% {background-color: darkgoldenrod;}
+    50% {background-color: darkslateblue;}
+    75% {background-color: darkcyan;}
+    100% {background-color: darkblue;}
+}
