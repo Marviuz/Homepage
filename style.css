@@ -1,18 +1,8 @@
 body {
     overflow-x: hidden;
-    animation: bgColor 10s infinite;
-}
-
-body::before {
-    width: 100%;
-    text-align: center;
-    color: white;
-    position: fixed;
-    content: "Welcome!";
-    font-size: 100px;
-    animation: bgAnimate 10s infinite;
-    top: 40%;
-    z-index: -1;
+    animation: bgAnimate 50s infinite;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .elements {
@@ -28,17 +18,21 @@ body::before {
     height: 100px;
     width: auto;
     transition: .3s ease-in-out;
-    opacity: 0.3;
+    filter: drop-shadow(#222 0 0 1px);
 }
 
 .element-img:hover {
     transform: scale(1.5, 1.5);
     filter: drop-shadow(#222 0 0 10px);
-    opacity: 1;
 }
 
-#nav {
-    box-shadow: #545454 0 0 10px 5px;
+nav {
+    background-color: rgba(0, 0, 0, 0);
+    transition: .3s ease-in-out;
+}
+
+nav:hover {
+    background-color: #222;
 }
 
 a,
@@ -67,18 +61,32 @@ a:hover {
     transform: scale(1.5, 1.5) translate(-50px, 0);
 }
 
-@keyframes bgAnimate {
-    0% {transform: rotate(0deg);}
-    25% {transform: rotate(3deg);}
-    50% {transform: rotate(-5deg); content: "Pick Your Website!";}
-    75% {transform: rotate(5deg);}
-    100% {transform: rotate(0deg);}
+#time {
+    cursor: pointer;
+    transition: .3s ease-in-out;
 }
 
-@keyframes bgColor {
-    0% {background-color: darkblue;}
-    25% {background-color: darkgoldenrod;}
-    50% {background-color: darkslateblue;}
-    75% {background-color: darkcyan;}
-    100% {background-color: darkblue;}
+#time:hover {
+    transform: scale(1.5, 1.5);
+    background-color: steelblue;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+@keyframes bgAnimate {
+    0% {
+        background-image: url(https://wallpaperscraft.com/image/madoka_homura_anime_girl_92054_1920x1080.jpg);
+    }
+    25% {
+        background-image: url(https://wallpapertag.com/wallpaper/full/c/5/e/124735-free-cool-anime-backgrounds-1920x1080-for-hd-1080p.jpg);
+    }
+    50% {
+        background-image: url(https://wallpaper.wiki/wp-content/uploads/2017/05/Cute-Anime-Girl-Desktop-Wallpapers-HD.jpg);
+    }
+    75% {
+        background-image: url(http://cdn-images.9cloud.us/439/piccit_kosaki_onodera_1920x1080_1051615272.jpg);
+    }
+    100% {
+        background-image: url(https://wallpaperscraft.com/image/madoka_homura_anime_girl_92054_1920x1080.jpg);
+    }
 }
