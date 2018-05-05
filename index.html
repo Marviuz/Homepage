@@ -1,133 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>My Homepage</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Go-home.svg/2000px-Go-home.svg.png">
-    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        function startTime() {
-            var today = new Date();
-            var hours = today.getHours() > 12 ? today.getHours() - 12 : today.getHours();
-            var minutes = today.getMinutes();
-            var seconds = today.getSeconds();
-            var ampm = today.getHours() >= 12 ? "PM" : "AM";
-            hours = hours < 10 ? '0' + hours : hours;
-            hours = hours == 0 ? '12' : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            var dateTime = days[today.getDay()] + ' ' + month[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear() +
-                ' ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
-            document.getElementById('time').innerHTML = dateTime;
-            var t = setTimeout(startTime, 500);
-        }
-
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>My Homepage</title>
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Go-home.svg/2000px-Go-home.svg.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="css/materialize.min.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body onload="startTime()">
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <a href="." class="navbar-brand"><i class="fas fa-home"></i></a>
-        <ul class="navbar-nav mx-auto">
-            <li class="nav-item text-white" id="time"></li>
-        </ul>
-        <input type="text" class="ml-auto" placeholder="Search..." id="search" autocomplete="off">
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper grey darken-4">
+        <form>
+          <div class="input-field">
+            <input id="search" type="search" autocomplete="off">
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
     </nav>
-    <script>
-        $(function() {
-            $('#search').focus();
-            $('#search').on('keyup', function() {
-                var kbd = $(this).val().toLowerCase();
-                $('.element-img').each(function() {
-                    var elmt = $(this).attr('alt').toLowerCase()
-                    if (elmt.indexOf(kbd) > -1) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-            });
-        });
-
-    </script>
-    <div class="container-fluid p-5">
-        <ul class="elements">
-            <li class="element">
-                <a href="http://kissanime.ru/" target="_blank">
-               <img src="http://kissanime.ru/Content/images/logo.png" alt="KissAnime" class="element-img">
-               </a>
-            </li>
-            <li class="element">
-                <a href="https://www.google.com" target="_blank">
-               <img src="https://www.google.com.ph/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" class="element-img">
-               </a>
-            </li>
-            <li class="element">
-                <a href="https://github.com/" target="_blank">
-               <img src="https://image.flaticon.com/icons/svg/25/25231.svg" alt="GitHub" class="element-img">
-               </a>
-            </li>
-            <li class="element">
-                <a href="https://www.youtube.com/" target="_blank">
-                   <img src="http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c545.png" alt="Youtube" class="element-img">
-               </a>
-            </li>
-            <li class="element">
-                <a href="https://www.facebook.com/" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/2000px-F_icon.svg.png" alt="FaceBook" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="https://www.messenger.com/" target="_blank">
-                    <img src="http://www.freeiconspng.com/uploads/facebook-chat-logo-png-19.png" alt="Facebook Messenger" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="https://i.slu.edu.ph/" target="_blank">
-                    <img src="https://i.slu.edu.ph/lib/images/Logo.png" alt="SLU portal" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="http://hikarinoakariost.info/" target="_blank">
-                    <img src="http://hikarinoakariost.info/wp-content/uploads/nuevo/2018/01/Banner2017A-1.jpg" alt="Hikari no Akari OST" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="https://nicoblog.org/" target="_blank">
-                    <img src="https://nicoblog.org/wp-content/uploads/2016/10/logo_bullets_300.png" alt="Nicoblog" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="http://anichart.net/" target="_blank">
-                    <img src="http://anichart.net/images/logo.png" alt="AniChart" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="https://classroom.google.com/u/1/" target="_blank">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Google_Classroom_Logo.png" alt="Google Classroom" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="https://stackoverflow.com/" target="_blank">
-                    <img src="https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.png" alt="StackOverflow" class="element-img">
-                </a>
-            </li>
-            <li class="element">
-                <a href="http://na.op.gg/champion/statistics" target="_blank">
-                    <img src="https://img7.androidappsapk.co/300/9/c/5/gg.op.lol.android.png" alt="OP.GG" class="element-img">
-                </a>
-            </li>
-        </ul>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </div>
+  
+  <div class="row">
+    <!-- <div class="col s3">
+      <a href="#" class="card waves-effect" target="_blank">
+        <div class="card-image">
+          <img src="http://hikarinoakariost.info/wp-content/uploads/nuevo/2018/01/Banner2017A-1.jpg" alt="">
+        </div>
+        <div class="card-content">
+          <span class="card-title black-text">Title here</span>
+        </div>
+      </a>
+    </div> -->
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/materialize.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 
 </html>
