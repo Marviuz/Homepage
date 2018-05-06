@@ -5,13 +5,15 @@ $(function() {
 
   resetContent();
 
-  $('#search').on('input', function() {
+  $('#search').on('keyup', function() {
     $('.row').html('');
     var input = this.value.toLowerCase();
     $.getJSON(jsonLink, function(data) {
+      var deck = '';
       $.each(data, function(key, val) {
         if (val.name.toLowerCase().indexOf(input) > -1) {
-          $('.row').append(addCard(val.name, val.link, val.logo));
+          deck += addCard(val.name, val.link, val.logo);
+          $('.row').html(deck);
         } else if (input == '') {
           resetContent();
         }
