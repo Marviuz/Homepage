@@ -1,9 +1,31 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app dark>
+    <v-toolbar app>
+      <v-toolbar-title>My Homepage</v-toolbar-title>
+      <v-spacer />
+      <v-toolbar-items>
+        <v-btn
+          v-if="$firebase.auth().currentUser"
+          depressed
+          @click="logoutFromGoogle()"
+        >
+          Logout
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-content>
+      <router-view />
+    </v-content>
+  </v-app>
 </template>
+
+<script>
+export default {
+  methods: {
+    logoutFromGoogle () {
+      this.$firebase.auth().signOut()
+        .then(() => this.$router.replace('login'))
+    }
+  }
+}
+</script>
