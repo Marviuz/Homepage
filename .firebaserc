@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "my-homepage-1c702",
+    "my-homepage": "my-homepage-1c702"
+  },
+  "targets": {
+    "my-homepage-1c702": {
+      "hosting": {
+        "im-home": [
+          "im-home"
+        ]
+      }
+    }
+  }
+}
