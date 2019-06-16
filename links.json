@@ -1,0 +1,67 @@
+[
+  {
+    "name": "kissanime",
+    "link": "http://kissanime.ru/",
+    "logo": "http://kissanime.ru/Content/images/logo.png"
+  },
+  {
+    "name": "google",
+    "link": "https://www.google.com/",
+    "logo": "https://www.google.com.ph/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+  },
+  {
+    "name": "github",
+    "link": "https://github.com/",
+    "logo": "https://image.flaticon.com/icons/svg/25/25231.svg"
+  },
+  {
+    "name": "youtube",
+    "link": "https://www.youtube.com/",
+    "logo": "http://www.stickpng.com/assets/images/580b57fcd9996e24bc43c545.png/"
+  },
+  {
+    "name": "facebook",
+    "link": "https://www.facebook.com/",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/2000px-F_icon.svg.png"
+  },
+  {
+    "name": "facebook messenger",
+    "link": "https://www.messenger.com/",
+    "logo": "http://www.freeiconspng.com/uploads/facebook-chat-logo-png-19.png"
+  },
+  {
+    "name": "slu portal",
+    "link": "https://i.slu.edu.ph/",
+    "logo": "https://i.slu.edu.ph/lib/images/Logo.png"
+  },
+  {
+    "name": "hikari no akari ost",
+    "link": "http://hikarinoakariost.info/",
+    "logo": "http://hikarinoakariost.info/wp-content/uploads/nuevo/2018/01/Banner2017A-1.jpg"
+  },
+  {
+    "name": "nicoblog",
+    "link": "https://nicoblog.org/",
+    "logo": "https://nicoblog.org/wp-content/uploads/2016/10/logo_bullets_300.png"
+  },
+  {
+    "name": "anichart",
+    "link": "http://anichart.net/",
+    "logo": "http://anichart.net/images/logo.png"
+  },
+  {
+    "name": "google classroom",
+    "link": "https://classroom.google.com/u/1/",
+    "logo": "https://upload.wikimedia.org/wikipedia/commons/5/59/Google_Classroom_Logo.png"
+  },
+  {
+    "name": "stackoverflow",
+    "link": "https://stackoverflow.com/",
+    "logo": "https://cdn.sstatic.net/Sites/stackoverflow/company/img/logos/so/so-logo.png"
+  },
+  {
+    "name": "op.gg",
+    "link": "http://na.op.gg/champion/statistics",
+    "logo": "https://img7.androidappsapk.co/300/9/c/5/gg.op.lol.android.png"
+  }
+]
