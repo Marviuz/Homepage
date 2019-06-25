@@ -23,7 +23,10 @@
           justify-center
         >
           <v-card-text :style="{ backgroundColor: 'rgba(0, 0, 0, .75)' }">
-            <div class="font-weight-light">
+            <div
+              :class="['font-weight-thin', 'white--text']"
+              :style="{ fontSize: '2rem' }"
+            >
               {{ name }}
             </div>
           </v-card-text>

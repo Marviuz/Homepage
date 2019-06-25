@@ -1,5 +1,9 @@
 <template>
-  <v-app dark>
+  <v-app
+    :dark="darkMode"
+    :style="$firebase.auth().currentUser && siteBg ? { backgroundImage: `url(${siteBg['.value']})` } : null"
+    :class="$firebase.auth().currentUser && siteBg ? 'app-custom': null"
+  >
     <v-toolbar app>
       <v-toolbar-title>
         <v-icon class="mr-2">
@@ -9,7 +13,10 @@
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items v-if="$firebase.auth().currentUser">
-        <v-menu offset-y>
+        <v-menu
+          offset-y
+          :close-on-content-click="false"
+        >
           <template v-slot:activator="{ on }">
             <v-btn
               flat
@@ -28,8 +35,23 @@
             </v-btn>
           </template>
           <v-list>
+            <v-list-tile>
+              <v-list-tile-action>
+                <v-switch
+                  v-model="darkMode"
+                  label="Dark Mode"
+                />
+              </v-list-tile-action>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-title>Help</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
             <v-list-tile @click="logoutFromGoogle">
-              <v-list-tile-title>Logout</v-list-tile-title>
+              <v-list-tile-content>
+                <v-list-tile-title>Logout</v-list-tile-title>
+              </v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-menu>
@@ -67,12 +89,15 @@
 export default {
   data () {
     return {
-      isConnected: false
+      isConnected: false,
+      darkMode: false,
+      siteBg: null
     }
   },
   firebase () {
     return {
-      isConnected: this.$database('.info/connected')
+      isConnected: this.$database('.info/connected'),
+      siteBg: this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`)
     }
   },
   methods: {
@@ -83,3 +108,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.app-custom {
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+
+  & > * {
+    opacity: .95;
+  }
+}
+</style>

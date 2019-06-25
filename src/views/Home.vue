@@ -40,20 +40,31 @@
       close-on-click
     >
       <v-list>
+        <v-list-tile @click="addSite.mode = 'changeBG', addSite.dialog = true">
+          <v-list-tile-content>
+            <v-list-tile-title>Change background</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile @click="addSite.dialog = true, addSite.mode = 'add'">
-          <v-list-tile-title>Add Site</v-list-tile-title>
+          <v-list-tile-content>
+            <v-list-tile-title>Add site</v-list-tile-title>
+          </v-list-tile-content>
         </v-list-tile>
         <v-list-tile
           v-if="!editMode"
           @click="editMode = true"
         >
-          <v-list-tile-title>Edit</v-list-tile-title>
+          <v-list-tile-content>
+            <v-list-tile-title>Edit</v-list-tile-title>
+          </v-list-tile-content>
         </v-list-tile>
         <v-list-tile
           v-if="editMode"
           @click="saveChangesTofirebase"
         >
-          <v-list-tile-title>Save</v-list-tile-title>
+          <v-list-tile-content>
+            <v-list-tile-title>Save</v-list-tile-title>
+          </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-menu>
@@ -128,7 +139,7 @@
     >
       <v-card>
         <v-toolbar flat>
-          <v-toolbar-title>{{ addSite.mode.toUpperCase() }} Site</v-toolbar-title>
+          <v-toolbar-title>{{ addSite.mode === 'changeBG' ? 'Change Background' : `${addSite.mode.toUpperCase()} Site` }}</v-toolbar-title>
           <v-spacer />
           <v-btn
             icon
@@ -140,26 +151,35 @@
         <form @submit.prevent="addSiteToFirebase">
           <v-card-text>
             <v-text-field
-              v-model="addSite.name"
-              label="Name"
+              v-if="addSite.mode === 'changeBG'"
+              v-model="addSite.background"
+              label="Background link"
               required
             />
-            <v-text-field
-              v-model="addSite.link"
-              label="Link"
-              required
-            />
-            <v-text-field
-              v-model="addSite.logo"
-              label="Logo"
-              required
-            />
+            <template v-else>
+              <v-text-field
+                v-model="addSite.name"
+                label="Name"
+                required
+              />
+              <v-text-field
+                v-model="addSite.link"
+                label="Link"
+                required
+              />
+              <v-text-field
+                v-model="addSite.logo"
+                label="Logo"
+                required
+              />
+            </template>
           </v-card-text>
           <v-card-actions>
             <v-spacer />
             <v-btn
               depressed
               color="red"
+              class="white--text"
               @click="reset"
             >
               Cancel
@@ -194,7 +214,8 @@ export default {
         dialog: false,
         link: null,
         logo: null,
-        name: null
+        name: null,
+        background: null
       },
 
       contextMenu: {
@@ -217,15 +238,15 @@ export default {
   },
   firebase () {
     return {
-      items: this.$database(this.$firebase.auth().currentUser.uid)
+      items: this.$database(`${this.$firebase.auth().currentUser.uid}/sites`)
     }
   },
   methods: {
     addSiteToFirebase () {
-      const { link, logo, name, mode, key } = this.addSite
+      const { link, logo, name, mode, key, background } = this.addSite
 
       if (mode === 'add') {
-        this.$database(this.$firebase.auth().currentUser.uid)
+        this.$database(`${this.$firebase.auth().currentUser.uid}/sites`)
           .push({
             site: link,
             logo,
@@ -244,8 +265,24 @@ export default {
               message: err.message
             }
           })
+      } else if (mode === 'changeBG') {
+        this.$database(this.$firebase.auth().currentUser.uid)
+          .update({ bgImage: background })
+          .then(() => {
+            this.editSaved = {
+              dialog: true,
+              message: 'Saved successfully!'
+            }
+            this.reset()
+          })
+          .catch(err => {
+            this.messageDialog = {
+              dialog: true,
+              message: err.message
+            }
+          })
       } else {
-        this.$database(`/${this.$firebase.auth().currentUser.uid}/${key}`)
+        this.$database(`/${this.$firebase.auth().currentUser.uid}/sites/${key}`)
           .update({
             site: link,
             logo,
@@ -274,7 +311,8 @@ export default {
         dialog: false,
         link: null,
         logo: null,
-        name: null
+        name: null,
+        background: null
       }
     },
     handleChange ({ items }) {
@@ -282,7 +320,7 @@ export default {
     },
     saveChangesTofirebase () {
       this.editMode = false
-      this.$database(this.$firebase.auth().currentUser.uid).set(this.newOrder)
+      this.$database(this.$firebase.auth().currentUser.uid).update({ sites: this.newOrder })
         .then(() => {
           this.editSaved = true
         })
