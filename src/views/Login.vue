@@ -19,13 +19,13 @@
         <v-card-title class="headline">
           Error
         </v-card-title>
-        <v-card-text>text</v-card-text>
+        <v-card-text>{{ message }}</v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
             color="primary"
             flat
-            @click.native="dialog = false"
+            @click="$router.go()"
           >
             Reload
           </v-btn>
