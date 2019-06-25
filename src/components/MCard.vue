@@ -4,6 +4,7 @@
     class="pa-2"
   >
     <v-card
+      ripple
       hover
       height="100%"
       :href="site"

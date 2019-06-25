@@ -8,14 +8,31 @@
         <span>I'm Home!</span>
       </v-toolbar-title>
       <v-spacer />
-      <v-toolbar-items>
-        <v-btn
-          v-if="$firebase.auth().currentUser"
-          depressed
-          @click="logoutFromGoogle()"
-        >
-          Logout
-        </v-btn>
+      <v-toolbar-items v-if="$firebase.auth().currentUser">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              flat
+              v-on="on"
+            >
+              <v-avatar
+                :size="40"
+                class="mr-2"
+              >
+                <img
+                  :src="$firebase.auth().currentUser.photoURL"
+                  :alt="$firebase.auth().currentUser"
+                >
+              </v-avatar>
+              {{ $firebase.auth().currentUser.displayName }}
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-tile @click="logoutFromGoogle">
+              <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>

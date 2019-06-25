@@ -1,18 +1,19 @@
 <template>
   <v-container
     fluid
-    grid-list-lg
     fill-height
     class="align-items-start"
     @contextmenu.self.prevent="handleContainerContextmenu"
   >
     <grid
+      ref="grid"
       :key="JSON.stringify(items)"
       :draggable="editMode"
       :sortable="true"
       :items="items"
-      :cell-height="300"
-      :cell-width="250"
+      :style="{ position: 'initial' }"
+      :cell-height="350"
+      :cell-width="300"
       center
       @sort="handleChange"
       @contextmenu.self.native.prevent="handleContainerContextmenu"
