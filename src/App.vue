@@ -45,6 +45,11 @@
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>
+                <v-list-tile-title>Change color</v-list-tile-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>
                 <v-list-tile-title>Help</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
