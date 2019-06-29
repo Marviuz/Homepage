@@ -36,27 +36,28 @@
 </template>
 
 <script>
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 export default {
-  data () {
+  data() {
     return {
       dialog: false,
-      message: null
-    }
+      message: null,
+    };
   },
   methods: {
-    loginWithGoogle () {
+    loginWithGoogle() {
       this.$firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
-        .then(res => {
-          if (res) return this.$router.replace('/')
+        // eslint-disable-next-line consistent-return
+        .then((res) => {
+          if (res) return this.$router.replace('/');
         })
-        .catch(err => {
-          this.message = `An unexpected error occured, ${err.message}!`
-          this.dialog = true
-        })
-    }
-  }
-}
+        .catch((err) => {
+          this.message = `An unexpected error occured, ${err.message}!`;
+          this.dialog = true;
+        });
+    },
+  },
+};
 </script>

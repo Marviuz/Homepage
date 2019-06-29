@@ -41,39 +41,40 @@ export default {
   props: {
     name: {
       type: String,
-      default: 'N/A'
+      default: 'N/A',
     },
     logo: {
       type: String,
-      default: require('@/assets/sad_smiley.svg')
+      // eslint-disable-next-line global-require
+      default: require('@/assets/sad_smiley.svg'),
     },
     site: {
       type: String,
       required: false,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
       isImg: true,
       contextMenu: {
         isVisible: false,
         position: {
           x: 0,
-          y: 0
-        }
-      }
-    }
+          y: 0,
+        },
+      },
+    };
   },
   methods: {
-    renderLogo (logo) {
-      this.isImg = false
+    renderLogo() {
+      this.isImg = false;
     },
-    handleContextmenu (evt) {
-      this.contextMenu.isVisible = true
-      this.contextMenu.position.x = evt.clientX
-      this.contextMenu.position.y = evt.clientY
-    }
-  }
-}
+    handleContextmenu(evt) {
+      this.contextMenu.isVisible = true;
+      this.contextMenu.position.x = evt.clientX;
+      this.contextMenu.position.y = evt.clientY;
+    },
+  },
+};
 </script>

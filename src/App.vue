@@ -1,8 +1,8 @@
 <template>
   <v-app
     :dark="darkMode"
-    :style="$firebase.auth().currentUser && siteBg ? { backgroundImage: `url(${siteBg['.value']})` } : null"
-    :class="$firebase.auth().currentUser && siteBg ? 'app-custom': null"
+    :style="isLoggedInAndHasBG ? { backgroundImage: `url(${siteBg['.value']})` } : null"
+    :class="isLoggedInAndHasBG ? 'app-custom': null"
   >
     <v-toolbar app>
       <v-toolbar-title>
@@ -102,29 +102,35 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       isConnected: false,
       darkMode: false,
       siteBg: null,
       changeColor: {
-        dialog: false
-      }
-    }
+        dialog: false,
+      },
+    };
   },
-  firebase () {
+  firebase() {
     return {
       isConnected: this.$database('.info/connected'),
-      siteBg: this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`)
-    }
+      siteBg: this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`),
+    };
+  },
+  computed: {
+    isLoggedInAndHasBG() {
+      const isLoggedIn = this.$firebase.auth().currentUser;
+      return isLoggedIn && this.siteBg;
+    },
   },
   methods: {
-    logoutFromGoogle () {
+    logoutFromGoogle() {
       this.$firebase.auth().signOut()
-        .then(() => this.$router.replace('login'))
-    }
-  }
-}
+        .then(() => this.$router.replace('login'));
+    },
+  },
+};
 </script>
 
 <style lang="scss">

@@ -1,4 +1,4 @@
-import Vue from 'vue'
-import { rtdbPlugin } from 'vuefire'
+import Vue from 'vue';
+import { rtdbPlugin } from 'vuefire';
 
-Vue.use(rtdbPlugin)
+Vue.use(rtdbPlugin);

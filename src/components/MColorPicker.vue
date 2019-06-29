@@ -14,30 +14,27 @@
 </template>
 
 <script>
-import { Chrome } from 'vue-color'
+import { Chrome } from 'vue-color';
 
 export default {
   components: { 'chrome-picker': Chrome },
-  data () {
+  data() {
     return {
       color: {
-        rgba: { r: 0, g: 0, b: 0 }
-      }
-    }
+        rgba: { r: 0, g: 0, b: 0 },
+      },
+    };
   },
   computed: {
-    colorFormatted () {
-      const values = []
+    colorFormatted() {
+      const values = [];
       for (const [, value] of Object.entries(this.color.rgba)) {
-        values.push(value)
+        values.push(value);
       }
-      return `rgba(${values.join(', ')})`
-    }
+      return `rgba(${values.join(', ')})`;
+    },
   },
-  created () {
-    console.log(this.$vuetify)
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>

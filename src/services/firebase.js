@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import firebase from 'firebase/app'
-import 'firebase/database'
-import 'firebase/auth'
+import Vue from 'vue';
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth';
 
 const app = firebase.initializeApp({
   apiKey: 'AIzaSyAXQNY541qpHzDuxxpwtvMn8cyCt4cKtYE',
@@ -10,26 +10,26 @@ const app = firebase.initializeApp({
   projectId: 'my-homepage-1c702',
   storageBucket: 'my-homepage-1c702.appspot.com',
   messagingSenderId: '732627148929',
-  appId: '1:732627148929:web:4cf813ddb1fd29ec'
-})
+  appId: '1:732627148929:web:4cf813ddb1fd29ec',
+});
 
 Vue.use({
-  install (Vue) {
+  install() {
     Object.defineProperty(Vue.prototype, '$firebase', {
-      value: app
-    })
-  }
-})
+      value: app,
+    });
+  },
+});
 
 Vue.use({
-  install (Vue) {
+  install() {
     Object.defineProperty(Vue.prototype, '$database', {
-      value: ref => app.database().ref(ref)
-    })
-  }
-})
+      value: ref => app.database().ref(ref),
+    });
+  },
+});
 
 export default {
   database: app.database(),
-  auth: app.auth()
-}
+  auth: app.auth(),
+};

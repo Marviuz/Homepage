@@ -82,7 +82,7 @@
         <v-list-tile @click="addSite.dialog = true">
           <v-list-tile-title>Edit</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile @click="$database(`/${$firebase.auth().currentUser.uid}/${addSite.key}`).remove()">
+        <v-list-tile @click="deleteSite(addSite.key)">
           <v-list-tile-title>Delete</v-list-tile-title>
         </v-list-tile>
       </v-list>
@@ -139,7 +139,13 @@
     >
       <v-card>
         <v-toolbar flat>
-          <v-toolbar-title>{{ addSite.mode === 'changeBG' ? 'Change Background' : `${addSite.mode.toUpperCase()} Site` }}</v-toolbar-title>
+          <v-toolbar-title>
+            {{
+              addSite.mode === 'changeBG'
+                ? 'Change Background'
+                : `${addSite.mode.toUpperCase()} Site`
+            }}
+          </v-toolbar-title>
           <v-spacer />
           <v-btn
             icon
@@ -199,14 +205,14 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       editMode: false,
       editSaved: false,
 
       messageDialog: {
         dialog: false,
-        message: null
+        message: null,
       },
 
       addSite: {
@@ -215,146 +221,152 @@ export default {
         link: null,
         logo: null,
         name: null,
-        background: null
+        background: null,
       },
 
       contextMenu: {
         isVisible: false,
         position: {
           x: 0,
-          y: 0
-        }
+          y: 0,
+        },
       },
       cardContextMenu: {
         isVisible: false,
         position: {
           x: 0,
-          y: 0
-        }
+          y: 0,
+        },
       },
       items: [],
-      newOrder: []
-    }
+      newOrder: [],
+    };
   },
-  firebase () {
+  firebase() {
     return {
-      items: this.$database(`${this.$firebase.auth().currentUser.uid}/sites`)
-    }
+      items: this.$database(`${this.$firebase.auth().currentUser.uid}/sites`),
+    };
   },
   methods: {
-    addSiteToFirebase () {
-      const { link, logo, name, mode, key, background } = this.addSite
+    deleteSite(key) {
+      this.$database(`/${this.$firebase.auth().currentUser.uid}/${key}`).remove();
+    },
+    addSiteToFirebase() {
+      const {
+        link, logo, name, mode, key, background,
+      } = this.addSite;
 
       if (mode === 'add') {
         this.$database(`${this.$firebase.auth().currentUser.uid}/sites`)
           .push({
             site: link,
             logo,
-            name
+            name,
           })
           .then(() => {
             this.editSaved = {
               dialog: true,
-              message: 'Saved successfully!'
-            }
-            this.reset()
+              message: 'Saved successfully!',
+            };
+            this.reset();
           })
-          .catch(err => {
+          .catch((err) => {
             this.messageDialog = {
               dialog: true,
-              message: err.message
-            }
-          })
+              message: err.message,
+            };
+          });
       } else if (mode === 'changeBG') {
         this.$database(this.$firebase.auth().currentUser.uid)
           .update({ bgImage: background })
           .then(() => {
             this.editSaved = {
               dialog: true,
-              message: 'Saved successfully!'
-            }
-            this.reset()
+              message: 'Saved successfully!',
+            };
+            this.reset();
           })
-          .catch(err => {
+          .catch((err) => {
             this.messageDialog = {
               dialog: true,
-              message: err.message
-            }
-          })
+              message: err.message,
+            };
+          });
       } else {
         this.$database(`/${this.$firebase.auth().currentUser.uid}/sites/${key}`)
           .update({
             site: link,
             logo,
-            name
+            name,
           })
           .then(() => {
             this.editSaved = {
               dialog: true,
-              message: 'Saved successfully!'
-            }
-            this.reset()
+              message: 'Saved successfully!',
+            };
+            this.reset();
           })
-          .catch(err => {
+          .catch((err) => {
             this.messageDialog = {
               dialog: true,
-              message: err.message
-            }
-          })
+              message: err.message,
+            };
+          });
       }
 
-      this.reset()
+      this.reset();
     },
-    reset () {
+    reset() {
       this.addSite = {
         mode: this.addSite.mode,
         dialog: false,
         link: null,
         logo: null,
         name: null,
-        background: null
-      }
+        background: null,
+      };
     },
-    handleChange ({ items }) {
-      this.newOrder = items.map(({ item }) => ({ logo: item.logo, name: item.name, site: item.site }))
+    handleChange({ items }) {
+      // eslint-disable-next-line max-len
+      this.newOrder = items.map(({ item }) => ({ logo: item.logo, name: item.name, site: item.site }));
     },
-    saveChangesTofirebase () {
-      this.editMode = false
+    saveChangesTofirebase() {
+      this.editMode = false;
       this.$database(this.$firebase.auth().currentUser.uid).update({ sites: this.newOrder })
         .then(() => {
-          this.editSaved = true
+          this.editSaved = true;
         })
-        .catch(err => {
+        .catch((err) => {
           this.messageDialog = {
             dialog: true,
-            message: err.message
-          }
-        })
+            message: err.message,
+          };
+        });
     },
-    handleContainerContextmenu (evt) {
-      this.cardContextMenu.isVisible = false
+    handleContainerContextmenu(evt) {
+      this.cardContextMenu.isVisible = false;
 
-      this.contextMenu.isVisible = true
-      this.contextMenu.position.x = evt.clientX
-      this.contextMenu.position.y = evt.clientY
+      this.contextMenu.isVisible = true;
+      this.contextMenu.position.x = evt.clientX;
+      this.contextMenu.position.y = evt.clientY;
     },
-    handleCardContextmenu (evt, data) {
-      this.contextMenu.isVisible = false
+    handleCardContextmenu(evt, data) {
+      this.contextMenu.isVisible = false;
 
       this.addSite = {
         mode: 'edit',
         key: data['.key'],
         link: data.site,
         logo: data.logo,
-        name: data.name
-      }
+        name: data.name,
+      };
 
-      this.cardContextMenu.isVisible = true
-      this.cardContextMenu.position.x = evt.clientX
-      this.cardContextMenu.position.y = evt.clientY
-    }
-  }
-}
+      this.cardContextMenu.isVisible = true;
+      this.cardContextMenu.position.x = evt.clientX;
+      this.cardContextMenu.position.y = evt.clientY;
+    },
+  },
+};
 </script>
 
 <style scoped>

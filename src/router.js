@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import firebase from './services/firebase'
+import Vue from 'vue';
+import Router from 'vue-router';
+import firebase from './services/firebase';
 
-import Home from './views/Home.vue'
-import Login from './views/Login.vue'
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
@@ -15,23 +15,23 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: Home,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
-    }
-  ]
-})
+      component: Login,
+    },
+  ],
+});
 
 router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth.currentUser
-  const requiresAuth = to.matched.some(rec => rec.meta.requiresAuth)
+  const { currentUser } = firebase.auth;
+  const requiresAuth = to.matched.some(rec => rec.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next({ path: '/login' })
-  else if (!requiresAuth && currentUser) next({ path: '/' })
-  else next()
-})
+  if (requiresAuth && !currentUser) next({ path: '/login' });
+  else if (!requiresAuth && currentUser) next({ path: '/' });
+  else next();
+});
 
-export default router
+export default router;
