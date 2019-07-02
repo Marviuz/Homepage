@@ -129,6 +129,15 @@
             >
               Customize
             </v-card-title>
+            <v-spacer />
+            <v-btn
+              icon
+              :color="theme.text"
+              flat
+              @click="handleColorReset"
+            >
+              <v-icon>close</v-icon>
+            </v-btn>
           </v-toolbar>
           <v-container grid-list-lg>
             <v-layout grid-list-lg>
@@ -226,6 +235,9 @@ export default {
           };
         });
 
+      this.handleColorReset();
+    },
+    handleColorReset() {
       this.changeColor.dialog = false;
       this.newTheme = {
         primary: '#000000',

@@ -92,13 +92,16 @@
       v-model="messageDialog.dialog"
       width="50%"
     >
-      <v-card>
+      <v-card :color="theme.primary">
         <v-card-text>
           <v-layout
             justify-center
             align-center
           >
-            <div class="font-weight-thin display-3 text-xs-center">
+            <div
+              class="font-weight-thin display-3 text-xs-center"
+              :style="{ color: theme.text }"
+            >
               {{ messageDialog.message }}
             </div>
           </v-layout>
@@ -117,6 +120,7 @@
 
       <v-btn
         flat
+        :color="theme.primary"
         @click="saveChangesTofirebase"
       >
         Save
@@ -138,8 +142,11 @@
       persistent
     >
       <v-card>
-        <v-toolbar flat>
-          <v-toolbar-title>
+        <v-toolbar
+          flat
+          :color="theme.primary"
+        >
+          <v-toolbar-title :style="{ color: theme.text }">
             {{
               addSite.mode === 'changeBG'
                 ? 'Change Background'
@@ -149,6 +156,8 @@
           <v-spacer />
           <v-btn
             icon
+            :color="theme.text"
+            flat
             @click="reset()"
           >
             <v-icon>close</v-icon>
@@ -193,6 +202,7 @@
             <v-btn
               flat
               type="submit"
+              :color="theme.primary"
             >
               {{ addSite.mode === 'add' ? 'Add' : 'Save' }}
             </v-btn>
@@ -253,6 +263,9 @@ export default {
           items.push(clone);
         }
         return items;
+      },
+      theme(state) {
+        return state.database.obj.theme || {};
       },
     }),
   },

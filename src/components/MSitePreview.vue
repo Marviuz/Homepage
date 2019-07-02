@@ -1,6 +1,6 @@
 <template>
   <div
-    :key="JSON.stringify(theme)"
+    :key="JSON.stringify({ theme, value })"
     :style="{ backgroundColor: value.primary, height: '100%' }"
   >
     <div
