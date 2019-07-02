@@ -52,7 +52,7 @@
         </v-list-tile>
         <v-list-tile
           v-if="!editMode"
-          @click="editMode = true"
+          @click="handleEditMode"
         >
           <v-list-tile-content>
             <v-list-tile-title>Edit</v-list-tile-title>
@@ -329,6 +329,11 @@ export default {
     handleChange({ items }) {
       // eslint-disable-next-line max-len
       this.newOrder = items.map(({ item }) => ({ logo: item.logo, name: item.name, site: item.site }));
+    },
+    handleEditMode() {
+      this.editMode = true;
+      // eslint-disable-next-line max-len
+      this.newOrder = this.items.map(item => ({ logo: item.logo, name: item.name, site: item.site }));
     },
     saveChangesTofirebase() {
       this.editMode = false;
