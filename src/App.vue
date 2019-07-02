@@ -113,10 +113,16 @@ export default {
     };
   },
   firebase() {
-    return {
-      isConnected: this.$database('.info/connected'),
-      siteBg: this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`),
-    };
+    try {
+      return {
+        isConnected: this.$database('.info/connected'),
+        siteBg: this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`),
+      };
+    } catch (err) {
+      return {
+        isConnected: this.$database('.info/connected'),
+      };
+    }
   },
   computed: {
     isLoggedInAndHasBG() {
