@@ -4,7 +4,7 @@
     class="pa-2"
   >
     <v-card
-      :color="theme.primary"
+      :color="lightenOrDarken(theme.primary)"
       ripple
       hover
       height="100%"
@@ -39,6 +39,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import lightenOrDarken from '@/utils/lighten-darken';
 
 export default {
   props: {
@@ -84,6 +85,10 @@ export default {
       this.contextMenu.isVisible = true;
       this.contextMenu.position.x = evt.clientX;
       this.contextMenu.position.y = evt.clientY;
+    },
+    lightenOrDarken(color) {
+      if (color) return lightenOrDarken(color, -30);
+      return color;
     },
   },
 };

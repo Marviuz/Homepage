@@ -1,15 +1,19 @@
 <template>
-  <v-menu offset-y>
+  <v-menu
+    offset-y
+    :close-on-content-click="false"
+  >
     <template v-slot:activator="{ on }">
       <v-text-field
-        :value="colorFormatted"
+        :value="value"
         :label="label"
         v-on="on"
       />
     </template>
     <chrome-picker
-      v-model="color"
+      :value="value"
       class="chrome-color-picker"
+      @input="$emit('input', $event.hex)"
     />
   </v-menu>
 </template>
@@ -19,26 +23,18 @@ import { Chrome } from 'vue-color';
 
 export default {
   components: { 'chrome-picker': Chrome },
+  model: {
+    props: 'value',
+    event: 'input',
+  },
   props: {
     label: {
       type: String,
       default: null,
     },
-  },
-  data() {
-    return {
-      color: {
-        rgba: { r: 0, g: 0, b: 0 },
-      },
-    };
-  },
-  computed: {
-    colorFormatted() {
-      const values = [];
-      for (const [, value] of Object.entries(this.color.rgba)) {
-        values.push(value);
-      }
-      return `rgba(${values.join(', ')})`;
+    value: {
+      type: String,
+      default: '#000000',
     },
   },
 };
