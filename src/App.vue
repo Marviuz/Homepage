@@ -1,8 +1,8 @@
 <template>
   <v-app
     :dark="darkMode"
-    :style="isLoggedInAndHasBG ? { backgroundImage: `url(${siteBg['.value']})` } : null"
-    :class="isLoggedInAndHasBG ? 'app-custom': null"
+    :style="siteBg ? { backgroundImage: `url(${siteBg})` } : null"
+    :class="siteBg ? 'app-custom': null"
   >
     <v-toolbar app>
       <v-toolbar-title>
@@ -101,39 +101,34 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
       isConnected: false,
       darkMode: false,
-      siteBg: null,
       changeColor: {
         dialog: false,
       },
     };
   },
-  firebase() {
-    try {
-      return {
-        isConnected: this.$database('.info/connected'),
-        siteBg: this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`),
-      };
-    } catch (err) {
-      return {
-        isConnected: this.$database('.info/connected'),
-      };
-    }
-  },
   computed: {
-    isLoggedInAndHasBG() {
-      const isLoggedIn = this.$firebase.auth().currentUser;
-      return isLoggedIn && this.siteBg;
-    },
+    ...mapState({
+      siteBg(state) {
+        return state.database.obj.bgImage;
+      },
+    }),
+  },
+  firebase() {
+    return {
+      isConnected: this.$database('.info/connected'),
+    };
   },
   methods: {
     logoutFromGoogle() {
       this.$firebase.auth().signOut()
-        .then(() => this.$router.replace('login'));
+        .then(() => this.$router.go());
     },
   },
 };

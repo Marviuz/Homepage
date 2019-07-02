@@ -204,6 +204,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
@@ -238,18 +240,32 @@ export default {
           y: 0,
         },
       },
-      items: [],
       newOrder: [],
     };
   },
-  firebase() {
-    return {
-      items: this.$database(`${this.$firebase.auth().currentUser.uid}/sites`),
-    };
+  computed: {
+    ...mapState({
+      items(state) {
+        const items = [];
+        for (const [key, value] of Object.entries(state.database.obj.sites || {})) {
+          const clone = value;
+          clone['.key'] = key;
+          items.push(clone);
+        }
+        return items;
+      },
+    }),
+  },
+  created() {
+    if (this.$firebase.auth().currentUser) {
+      this.$store.dispatch('database/setDatabaseViaVuexfire');
+    } else {
+      this.$store.dispatch('database/setDatabase');
+    }
   },
   methods: {
     deleteSite(key) {
-      this.$database(`/${this.$firebase.auth().currentUser.uid}/${key}`).remove();
+      this.$database(`/${this.$firebase.auth().currentUser.uid}/sites/${key}`).remove();
     },
     addSiteToFirebase() {
       const {
