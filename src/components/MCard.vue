@@ -4,6 +4,7 @@
     class="pa-2"
   >
     <v-card
+      :color="theme.primary"
       ripple
       hover
       height="100%"
@@ -25,7 +26,7 @@
           <v-card-text :style="{ backgroundColor: 'rgba(0, 0, 0, .75)' }">
             <div
               :class="['font-weight-thin', 'white--text']"
-              :style="{ fontSize: '2rem' }"
+              :style="{ fontSize: '2rem', color: theme.text ? theme.text + ' !important' : null }"
             >
               {{ name }}
             </div>
@@ -37,6 +38,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   props: {
     name: {
@@ -65,6 +68,13 @@ export default {
         },
       },
     };
+  },
+  computed: {
+    ...mapState({
+      theme(state) {
+        return state.database.obj.theme || {};
+      },
+    }),
   },
   methods: {
     renderLogo() {

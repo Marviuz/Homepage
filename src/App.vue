@@ -2,14 +2,20 @@
   <v-app
     :dark="darkMode"
     :style="siteBg ? { backgroundImage: `url(${siteBg})` } : null"
-    :class="siteBg ? 'app-custom': null"
+    :class="`${siteBg ? 'app-custom': null}`"
   >
-    <v-toolbar app>
+    <v-toolbar
+      app
+      :color="theme.primary"
+    >
       <v-toolbar-title>
-        <v-icon class="mr-2">
+        <v-icon
+          class="mr-2"
+          :style="{ color: theme.text }"
+        >
           home
         </v-icon>
-        <span>I'm Home!</span>
+        <span :style="{ color: theme.text }">I'm Home!</span>
       </v-toolbar-title>
       <v-spacer />
       <v-toolbar-items v-if="$firebase.auth().currentUser">
@@ -31,7 +37,9 @@
                   :alt="$firebase.auth().currentUser"
                 >
               </v-avatar>
-              {{ $firebase.auth().currentUser.displayName }}
+              <span :style="{ color: theme.text }">
+                {{ $firebase.auth().currentUser.displayName }}
+              </span>
             </v-btn>
           </template>
           <v-list>
@@ -64,7 +72,7 @@
     </v-toolbar>
     <v-content>
       <v-snackbar
-        color="red"
+        color="error"
         :value="!isConnected['.value']"
         :timeout="0"
         top
@@ -74,7 +82,7 @@
           grid-list-lg
         >
           <v-flex>
-            <v-icon color="red darken-4">
+            <v-icon color="error darken-4">
               warning
             </v-icon>
           </v-flex>
@@ -92,8 +100,26 @@
       width="500"
     >
       <v-card>
+        <v-toolbar
+          color="primary"
+          flat
+        >
+          <v-toolbar-title class="headline">
+            Set colors
+          </v-toolbar-title>
+        </v-toolbar>
         <v-card-text>
-          <m-color-picker />
+          <v-layout>
+            <v-flex xs4>
+              <m-color-picker label="Background" />
+            </v-flex>
+            <v-flex xs4>
+              <m-color-picker label="Text" />
+            </v-flex>
+            <v-flex xs4>
+              <m-color-picker label="Something" />
+            </v-flex>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -117,6 +143,9 @@ export default {
     ...mapState({
       siteBg(state) {
         return state.database.obj.bgImage;
+      },
+      theme(state) {
+        return state.database.obj.theme || {};
       },
     }),
   },

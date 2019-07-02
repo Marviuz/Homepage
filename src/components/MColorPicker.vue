@@ -3,6 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-text-field
         :value="colorFormatted"
+        :label="label"
         v-on="on"
       />
     </template>
@@ -18,6 +19,12 @@ import { Chrome } from 'vue-color';
 
 export default {
   components: { 'chrome-picker': Chrome },
+  props: {
+    label: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       color: {
