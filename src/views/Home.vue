@@ -165,12 +165,40 @@
         </v-toolbar>
         <form @submit.prevent="addSiteToFirebase">
           <v-card-text>
-            <v-text-field
-              v-if="addSite.mode === 'changeBG'"
-              v-model="addSite.background"
-              label="Background link"
-              required
-            />
+            <template v-if="addSite.mode === 'changeBG'">
+              <v-layout column>
+                <v-flex>
+                  <v-text-field
+                    v-model="addSite.background"
+                    label="Background link"
+                    required
+                  />
+                </v-flex>
+                <v-flex v-if="siteBg">
+                  <div class="headline">
+                    Current background
+                  </div>
+                  <v-img
+                    :src="siteBg"
+                    contain
+                  >
+                    <v-toolbar
+                      flat
+                      color="rgba(0, 0, 0, 0)"
+                    >
+                      <v-spacer />
+                      <v-btn
+                        depressed
+                        color="error"
+                        @click="removeBackgroundImage"
+                      >
+                        Remove
+                      </v-btn>
+                    </v-toolbar>
+                  </v-img>
+                </v-flex>
+              </v-layout>
+            </template>
             <template v-else>
               <v-text-field
                 v-model="addSite.name"
@@ -267,6 +295,9 @@ export default {
       theme(state) {
         return state.database.obj.theme || {};
       },
+      siteBg(state) {
+        return state.database.obj.bgImage;
+      },
     }),
   },
   created() {
@@ -278,7 +309,38 @@ export default {
   },
   methods: {
     deleteSite(key) {
-      this.$database(`/${this.$firebase.auth().currentUser.uid}/sites/${key}`).remove();
+      this.$database(`/${this.$firebase.auth().currentUser.uid}/sites/${key}`)
+        .remove()
+        .then(() => {
+          this.editSaved = {
+            dialog: true,
+            message: 'Deleted successfully!',
+          };
+          this.reset();
+        })
+        .catch((err) => {
+          this.messageDialog = {
+            dialog: true,
+            message: err.message,
+          };
+        });
+    },
+    removeBackgroundImage() {
+      this.$database(`${this.$firebase.auth().currentUser.uid}/bgImage`)
+        .remove()
+        .then(() => {
+          this.editSaved = {
+            dialog: true,
+            message: 'Removed successfully!',
+          };
+          this.reset();
+        })
+        .catch((err) => {
+          this.messageDialog = {
+            dialog: true,
+            message: err.message,
+          };
+        });
     },
     addSiteToFirebase() {
       const {
