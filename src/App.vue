@@ -3,7 +3,7 @@
     :style="{ backgroundColor: theme.primary, backgroundImage: siteBg ? `url(${siteBg})` : null }"
     :class="`${siteBg ? 'app-custom': null}`"
   >
-    <div :style="{ opacity: (opacity / 100).toFixed(2) }">
+    <div :style="{ display: 'flex', height: '100%', opacity: (opacity / 100).toFixed(2) }">
       <v-toolbar
         app
         :color="lightenOrDarken(theme.primary)"
@@ -321,5 +321,19 @@ export default {
   background-size: cover !important;
   background-repeat: no-repeat !important;
   background-attachment: fixed !important;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  background-color: rgba(0, 0, 0, .1);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .3);
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background-color: rgba(0, 0, 0, .3);
 }
 </style>
