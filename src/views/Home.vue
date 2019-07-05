@@ -205,16 +205,36 @@
                 label="Name"
                 required
               />
-              <v-text-field
-                v-model="addSite.link"
-                label="Link"
+              <v-combobox
+                v-for="vModel in ['Link', 'Logo']"
+                :key="vModel"
+                v-model="addSite[vModel.toLowerCase()]"
+                :item-text="vModel === 'Link' ? 'site' : 'logo'"
+                :item-value="vModel === 'Link' ? 'site' : 'logo'"
+                :return-object="false"
+                :label="vModel"
                 required
-              />
-              <v-text-field
-                v-model="addSite.logo"
-                label="Logo"
-                required
-              />
+                :items="recommendation"
+              >
+                <template v-slot:item="{ index, item }">
+                  <v-list-tile-avatar>
+                    <img :src="item.logo">
+                  </v-list-tile-avatar>
+                  <v-list-tile-content>
+                    <v-list-tile-title>
+                      <span class="subheading">
+                        {{ item.name }}
+                      </span>
+                      <span
+                        class="grey--text lighten-1"
+                        :style="{ fontSize: '.8rem' }"
+                      >
+                        ({{ item.site }})
+                      </span>
+                    </v-list-tile-title>
+                  </v-list-tile-content>
+                </template>
+              </v-combobox>
             </template>
           </v-card-text>
           <v-card-actions>
@@ -279,6 +299,8 @@ export default {
         },
       },
       newOrder: [],
+
+      rootDb: [],
     };
   },
   computed: {
@@ -299,6 +321,31 @@ export default {
         return state.database.obj.bgImage;
       },
     }),
+    recommendation() {
+      const logos = [];
+      const siteName = this.addSite.name;
+
+      if (!siteName) return [];
+
+      for (const [, { sites }] of Object.entries(this.rootDb)) {
+        for (const [, siteValue] of Object.entries(sites || {})) {
+          const name = siteName.replace(/[^A-Za-z0-9]+/g, ' ').split(' ').map(_ => _.toLowerCase());
+          const recommendationName = siteValue.name.replace(/[^A-Za-z0-9]+/g, ' ').split(' ').map(_ => _.toLowerCase());
+
+          // eslint-disable-next-line max-len
+          const isRecommended = recommendationName.some(_ => name.some($ => _.includes($)) || name.some($ => $.includes(_)));
+
+          if (isRecommended) logos.push(siteValue);
+        }
+      }
+
+      return logos;
+    },
+  },
+  firebase() {
+    return {
+      rootDb: this.$database(),
+    };
   },
   created() {
     if (this.$firebase.auth().currentUser) {
