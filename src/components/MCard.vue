@@ -4,7 +4,7 @@
     class="pa-2"
   >
     <v-card
-      :color="lightenOrDarken(theme.primary)"
+      :color="theme.primary ? $tinycolor(theme.primary).darken().toString() : null"
       ripple
       hover
       height="100%"
@@ -26,7 +26,7 @@
           <v-card-text :style="{ backgroundColor: 'rgba(0, 0, 0, .75)' }">
             <div
               :class="['font-weight-thin', 'white--text']"
-              :style="{ fontSize: '2rem', color: theme.text ? theme.text + ' !important' : null }"
+              :style="{ fontSize: '2rem' }"
             >
               {{ name }}
             </div>
@@ -39,7 +39,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import lightenOrDarken from '@/utils/lighten-darken';
 
 export default {
   props: {
@@ -85,10 +84,6 @@ export default {
       this.contextMenu.isVisible = true;
       this.contextMenu.position.x = evt.clientX;
       this.contextMenu.position.y = evt.clientY;
-    },
-    lightenOrDarken(color) {
-      if (color) return lightenOrDarken(color, -30);
-      return color;
     },
   },
 };

@@ -5,7 +5,7 @@
   >
     <div
       :style="{
-        backgroundColor: lightenOrDarken(value.primary, -30),
+        backgroundColor: $tinycolor(value.primary).darken().toString(),
         height: '20px',
         padding: '0 8px',
         lineHeight: 'unset',
@@ -23,7 +23,7 @@
         v-for="i in 3"
         :key="i"
         :style="{
-          backgroundColor: lightenOrDarken(value.primary, -30),
+          backgroundColor: $tinycolor(value.primary).darken().toString(),
           height: '40px',
           width: '40px',
           margin: '0 6px'
@@ -35,7 +35,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import lightenOrDarken from '@/utils/lighten-darken';
 
 export default {
   model: {
@@ -58,10 +57,5 @@ export default {
       return state.database.obj.theme;
     },
   }),
-  methods: {
-    lightenOrDarken(code, amount) {
-      return lightenOrDarken(code, amount);
-    },
-  },
 };
 </script>

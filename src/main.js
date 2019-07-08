@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import './components/_globals';
+import './utils/tinycolor';
 import App from './App.vue';
 import firebase from './services/firebase';
 import './plugins/vuefire';

@@ -7,6 +7,7 @@
       <v-text-field
         :value="value"
         :label="label"
+        readonly
         v-on="on"
       />
     </template>

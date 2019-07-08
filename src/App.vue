@@ -6,7 +6,7 @@
     <div :style="{ display: 'flex', height: '100%', opacity: (opacity / 100).toFixed(2) }">
       <v-toolbar
         app
-        :color="lightenOrDarken(theme.primary)"
+        :color="theme.primary && $tinycolor(theme.primary).darken().toString()"
       >
         <v-toolbar-title>
           <v-icon
@@ -18,6 +18,33 @@
           <span :style="{ color: theme.text }">I'm Home!</span>
         </v-toolbar-title>
         <v-spacer />
+        <v-layout
+          justify-end
+          mr-2
+        >
+          <v-flex
+            :style="{ transition: 'all .3s ease' }"
+            :grow="searchField.isFocused"
+            :shrink="!searchField.isFocused"
+          >
+            <v-form @submit.prevent="handleGoogleSearch">
+              <v-text-field
+                v-if="$firebase.auth().currentUser"
+                v-model="searchField.value"
+                prepend-inner-icon="$vuetify.icons.google"
+                append-icon="search"
+                :solo="theme.primary ? $tinycolor(theme.primary).isLight() : true"
+                :solo-inverted="theme.primary ? !$tinycolor(theme.primary).isLight() : false"
+                label="Search Google"
+                :background-color="theme.primary"
+                autofocus
+                hide-details
+                @focus="searchField.isFocused = true"
+                @focusout="searchField.isFocused = false"
+              />
+            </v-form>
+          </v-flex>
+        </v-layout>
         <v-toolbar-items v-if="$firebase.auth().currentUser">
           <v-menu
             offset-y
@@ -221,11 +248,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import lightenOrDarken from '@/utils/lighten-darken';
+import validator from 'validator';
 
 export default {
   data() {
     return {
+      searchField: {
+        value: null,
+        isFocused: false,
+      },
+
       newTheme: {
         primary: '#000000',
         text: '#000000',
@@ -270,6 +302,16 @@ export default {
     },
   },
   methods: {
+    handleGoogleSearch() {
+      if (validator.isURL(this.searchField.value, { require_protocol: true })) { // Has Protocol?
+        window.open(this.searchField.value);
+      } else if (validator.isURL(this.searchField.value)) { // Has not protocol
+        window.open(`http://${this.searchField.value}`);
+      } else { // Is not URL
+        window.open(`http://google.com/search?q=${encodeURI(this.searchField.value)}`);
+      }
+      this.searchField.value = null;
+    },
     saveOpacity() {
       this.$database(`${this.$firebase.auth().currentUser.uid}/theme`)
         .update({ opacity: this.opacity })
@@ -304,12 +346,6 @@ export default {
     logoutFromGoogle() {
       this.$firebase.auth().signOut()
         .then(() => this.$router.go());
-    },
-    lightenOrDarken(color) {
-      if (color) {
-        return lightenOrDarken(color, -30);
-      }
-      return color;
     },
   },
 };

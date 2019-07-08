@@ -1,6 +1,6 @@
 {
   "name": "im-home",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -11,6 +11,8 @@
     "core-js": "^2.6.5",
     "firebase": "^6.2.4",
     "lodash": "^4.17.11",
+    "tinycolor2": "^1.4.1",
+    "validator": "^11.1.0",
     "vue": "^2.6.10",
     "vue-color": "^2.7.0",
     "vue-js-grid": "^1.0.1",
