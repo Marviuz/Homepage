@@ -248,6 +248,7 @@
               Cancel
             </v-btn>
             <v-btn
+              v-if="addSite.logo && addSite.link && addSite.name"
               flat
               type="submit"
               :color="theme.primary"
